@@ -9,10 +9,38 @@ text-align: center;
 .title{
   font-size: 3rem;
   margin-bottom: 0.5rem;
-  color: #f0e37f;
+  color: #fffad6;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 .subtitle{
   font-size: 1.25rem;
-  color: #f0e37f;
+  color: #e9e1a2;
+}
+
+.cardContainer{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+.card{
+  display: block;
+  padding: 1rem;
+  border: 1px solid #e7e7e2;
+  border-radius: 10px;
+  text-align: center;
+  justify-content: center;
+  color: inherit;
+  background-color: #69663e;
+  transition: box-shadow 0.3s ease;
+ 
+}
+.card h2{
+   margin: 0 0 0.8rem 0;
+}
+.card:hover{
+  background-color: #807c4e;
+  transform:  translateY(-2px);
 }
