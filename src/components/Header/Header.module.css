@@ -1,0 +1,29 @@
+.containerHeader {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 2rem;
+    background-color: #69663e;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid #5c5a3d;
+}
+
+.card {
+    text-decoration: none;
+    color: #e9e1a2;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    font-weight: 500;
+}
+
+.card:hover {
+    background-color: var(--link-hover-background);
+    color: var(--link-hover-color);
+}
+
+
+.card h2 {
+    margin: 0;
+    font-size: 1rem;
+}
