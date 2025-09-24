@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import {LeadStatus } from '@prisma/client/edge';
+import { LeadStatus } from '@prisma/client/edge';
 import prisma from '@/lib/prisma';
 import { LeadService } from "@/services/LeadService";
-import type { ICreateLeadBody} from '@/@type/ICreateLeadBody';
+import type { ICreateLeadBody } from '@/@type/ICreateLeadBody';
 
 export async function GET(request: NextRequest) {
     try {
@@ -60,24 +60,23 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  try {
-    const { nome, email, telefone } = await request.json() as ICreateLeadBody;
+    try {
+        const { nome, email, telefone } = await request.json() as ICreateLeadBody;
 
-    if (!nome || !email || !telefone) {
-      return NextResponse.json({ message: "Nome, e-mail e telefone são obrigatórios." }, { status: 400 });
+        if (!nome || !email || !telefone) {
+            return NextResponse.json({ message: "Nome, e-mail e telefone são obrigatórios." }, { status: 400 });
+        }
+        const newLead = await LeadService.createLead({ nome, email, telefone });
+
+        return NextResponse.json(newLead, { status: 201 });
+
+    } catch (error: any) {
+
+        if (error.message.includes("recentemente")) {
+            return NextResponse.json({ message: error.message }, { status: 409 }); // 409 Conflict
+        }
+
+        console.error("Erro ao cadastrar lead:", error);
+        return NextResponse.json({ message: 'Ocorreu um erro interno no servidor.' }, { status: 500 });
     }
-    const newLead = await LeadService.createLead({ nome, email, telefone });
-
-    return NextResponse.json(newLead, { status: 201 });
-
-  } catch (error: any) {
-
-    if (error.message.includes("recentemente")) {
-      return NextResponse.json({ message: error.message }, { status: 409 }); // 409 Conflict
-    }
-    
-    // Para outros erros
-    console.error("Erro ao cadastrar lead:", error);
-    return NextResponse.json({ message: 'Ocorreu um erro interno no servidor.' }, { status: 500 });
-  }
 }
