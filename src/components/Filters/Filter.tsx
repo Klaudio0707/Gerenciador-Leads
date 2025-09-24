@@ -1,5 +1,5 @@
 import styles from './Filter.module.css';
-import type { IFiltersProps } from '@/@type/IFiltersProps';
+import type { IFiltersProps } from '@/@type/IProps/IFiltersProps';
 
 //entrada de props desestruturada
 export function Filters({ searchTerm, statusFilter, dateFilter, onSearchChange, onStatusChange, onDateChange}: IFiltersProps) {
