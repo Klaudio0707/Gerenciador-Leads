@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "postgresql"
+  url      = env("NEXT_URL_DB")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Enum para o status do lead
+enum LeadStatus {
+  NOVO
+  EM_CONTATO
+  CONVERTIDO
+}
+
+// Modelo do Lead
+model Lead {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  email     String   
+  telefone  String
+  createdAt DateTime @default(now())
+  status    LeadStatus @default(NOVO)
+
+  @@index([nome])
+  @@index([email])
+  @@index([telefone])
+  @@index([status])
+  @@index([createdAt])
+}
