@@ -1,0 +1,90 @@
+.tableContainer {
+    overflow-x: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .tableContainer.loading {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .th {
+    background: #000;
+    color: #fff;
+    text-align: left;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+  
+  .td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .editInput {
+    width: 100%;
+    padding: 0.4rem;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+  }
+  
+
+  .select {
+    padding: 0.4rem;
+    border-radius: 4px;
+    border: 1px solid #bbb;
+    background: #fff;
+  }
+  
+
+  .actionCell {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .statusBtn{
+    text-align: center;
+    background-color:#f5f5f5;
+  }
+  .statusConvertido {
+    color: #28a745; 
+    font-weight: bold;
+    background-color: #eafaf1; 
+    border-radius: 4px;
+  }
+  .actionCell button,
+  .actionCell a, .statusBtn {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+  
+  .actionCell a {
+    background-color: #25D366; 
+    color: #fff;
+  }
+  
+  .actionCell button {
+    background-color: #FFD60A;
+    color: #000;
+  }
+  
+  .actionCell button:hover {
+    background-color: #e6c309;
+  }
+  
+  .actionCell a:hover {
+    background-color: #1ebe5c;
+  }
+  
