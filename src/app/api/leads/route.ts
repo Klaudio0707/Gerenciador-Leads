@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { LeadStatus } from '@prisma/client/edge';
+import { LeadStatus, Prisma } from '@prisma/client/edge';
 import prisma from '@/lib/prisma';
 import { LeadService } from "@/services/LeadService";
 import type { ICreateLeadBody } from '@/@type/ICreateLeadBody';
@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search');
     const date = searchParams.get('date');
 
-    const whereClause: any = {};
+    const whereClause: Prisma.LeadWhereInput = {};
 
     if (status && Object.values(LeadStatus).includes(status as LeadStatus)) {
       whereClause.status = status as LeadStatus;
@@ -61,8 +61,12 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ leads, counts }, { status: 200 });
 
-  } catch (error) {
-    console.error("Erro ao buscar leads:", error);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Erro ao buscar leads:", error.message);
+    } else {
+      console.error("Erro desconhecido ao buscar leads:", error);
+    }
     return NextResponse.json({ message: 'Ocorreu um erro.' }, { status: 500 });
   }
 }
@@ -78,10 +82,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(newLead, { status: 201 });
 
-  } catch (error: any) {
-
-    if (error.message.includes("recentemente")) {
-      return NextResponse.json({ message: error.message }, { status: 409 }); // 409 Conflict
+  } catch (error: unknown) {
+    if (error instanceof Error && error.message.includes("recentemente")) {
+      return NextResponse.json({ message: error.message }, { status: 409 });
     }
 
     console.error("Erro ao cadastrar lead:", error);

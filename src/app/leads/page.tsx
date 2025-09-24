@@ -4,7 +4,7 @@ import { Filters } from "@/components/Filters/Filter"
 import { LeadTable } from "@/components/LeadTable/LeadTable"
 import { StatusCards } from "@/components/StatusCard/StatusCard"
 import { Lead, LeadStatus } from "@prisma/client/edge";
-import Link from "next/link";
+
 import { ChangeEvent, useEffect, useState } from "react";
 
 export default function Leads() {
@@ -49,7 +49,6 @@ export default function Leads() {
     return () => clearTimeout(timerId);
   }, [statusFilter, dateFilter, searchTerm]);
 
-  // --- (HANDLERS) ---
 
   const handleCycleStatus = async (leadToUpdate: Lead) => {
     const currentIndex = statusCycle.indexOf(leadToUpdate.status);
