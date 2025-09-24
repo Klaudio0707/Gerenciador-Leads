@@ -32,10 +32,10 @@ export async function GET(request: NextRequest) {
       whereClause.createdAt = { gte: startDate, lt: endDate };
     }
 
-    // Buscamos os leads com os filtros aplicados
+
     const leads = await prisma.lead.findMany({
       where: whereClause,
-      select: { // <<-- Usando 'select'
+      select: {
         id: true,
         nome: true,
         email: true,
@@ -46,20 +46,19 @@ export async function GET(request: NextRequest) {
       orderBy: { createdAt: 'desc' },
     });
 
-    // NOVO: Buscamos a contagem de leads por status
     const leadCounts = await prisma.lead.groupBy({
       by: ['status'],
       _count: { _all: true },
     });
 
-    // Transformamos o resultado para um formato mais fácil de usar no frontend
+
     const counts = leadCounts.reduce((acc, current) => {
       acc[current.status] = current._count._all;
       return acc;
     }, {} as Record<LeadStatus, number>);
 
 
-    // Retornamos ambos, os leads e as contagens
+
     return NextResponse.json({ leads, counts }, { status: 200 });
 
   } catch (error) {
@@ -69,23 +68,23 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-    try {
-        const { nome, email, telefone } = await request.json() as ICreateLeadBody;
+  try {
+    const { nome, email, telefone } = await request.json() as ICreateLeadBody;
 
-        if (!nome || !email || !telefone) {
-            return NextResponse.json({ message: "Nome, e-mail e telefone são obrigatórios." }, { status: 400 });
-        }
-        const newLead = await LeadService.createLead({ nome, email, telefone });
-
-        return NextResponse.json(newLead, { status: 201 });
-
-    } catch (error: any) {
-
-        if (error.message.includes("recentemente")) {
-            return NextResponse.json({ message: error.message }, { status: 409 }); // 409 Conflict
-        }
-
-        console.error("Erro ao cadastrar lead:", error);
-        return NextResponse.json({ message: 'Ocorreu um erro interno no servidor.' }, { status: 500 });
+    if (!nome || !email || !telefone) {
+      return NextResponse.json({ message: "Nome, e-mail e telefone são obrigatórios." }, { status: 400 });
     }
+    const newLead = await LeadService.createLead({ nome, email, telefone });
+
+    return NextResponse.json(newLead, { status: 201 });
+
+  } catch (error: any) {
+
+    if (error.message.includes("recentemente")) {
+      return NextResponse.json({ message: error.message }, { status: 409 }); // 409 Conflict
+    }
+
+    console.error("Erro ao cadastrar lead:", error);
+    return NextResponse.json({ message: 'Ocorreu um erro interno no servidor.' }, { status: 500 });
+  }
 }

@@ -1,7 +1,7 @@
 .tableContainer {
   width: 100%;
-  overflow-x: auto; /* Garante a responsividade em telas pequenas */
-  background-color: #69663e; /* Cor de fundo do card para a tabela */
+  overflow-x: auto; 
+  background-color: #69663e;
   padding: 1.5rem;
   border-radius: 10px;
   border: 1px solid #e7e7e2;
@@ -10,8 +10,8 @@
 
 .table {
   width: 100%;
-  border-collapse: collapse; /* Remove espaços entre as células */
-  color: #fffad6; /* Cor do texto principal */
+  border-collapse: collapse; 
+  color: #fffad6;
 }
 
 .th {
@@ -20,6 +20,6 @@
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #e9e1a2; /* Cor do subtítulo para os cabeçalhos */
+  color: #e9e1a2; 
   border-bottom: 2px solid #e7e7e2;
 }

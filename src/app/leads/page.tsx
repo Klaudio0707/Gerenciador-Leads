@@ -9,20 +9,20 @@ import { ChangeEvent, useEffect, useState } from "react";
 
 export default function Leads() {
 
-    const [leads, setLeads] = useState<Lead[]>([]);
+  const [leads, setLeads] = useState<Lead[]>([]);
 
-    // Estados para controlar o modo de edição
-    const [editingLeadId, setEditingLeadId] = useState<number | null>(null);
-    const [editFormData, setEditFormData] = useState({ nome: '', telefone: '', email: '', status: 'NOVO' as LeadStatus });
+  // Estados para controlar o modo de edição
+  const [editingLeadId, setEditingLeadId] = useState<number | null>(null);
+  const [editFormData, setEditFormData] = useState({ nome: '', telefone: '', email: '', status: 'NOVO' as LeadStatus });
 
-    //stados para o filter
-    const [statusFilter, setStatusFilter] = useState('');
-     const statusCycle: LeadStatus[] = ['NOVO', 'EM_CONTATO', 'CONVERTIDO'];
-    const [dateFilter, setDateFilter] = useState('');
-    const [searchTerm, setSearchTerm] = useState('');
+  //stados para o filter
+  const [statusFilter, setStatusFilter] = useState('');
+  const statusCycle: LeadStatus[] = ['NOVO', 'EM_CONTATO', 'CONVERTIDO'];
+  const [dateFilter, setDateFilter] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
-    const [leadCounts, setLeadCounts] = useState<Record<LeadStatus, number> | null>(null);
- useEffect(() => {
+  const [leadCounts, setLeadCounts] = useState<Record<LeadStatus, number> | null>(null);
+  useEffect(() => {
 
 
     const timerId = setTimeout(() => {
@@ -40,8 +40,8 @@ export default function Leads() {
           setLeadCounts(data.counts || {});
         } catch (err) {
           console.error(err);
-          
-        } 
+
+        }
       };
       fetchLeads();
     }, 300);
@@ -56,25 +56,25 @@ export default function Leads() {
     const nextIndex = (currentIndex + 1) % statusCycle.length;
     const newStatus = statusCycle[nextIndex];
 
-  
+
     await handleStatusChange(leadToUpdate.id, newStatus);
   };
 
   const handleStatusChange = async (id: number, status: LeadStatus) => {
-   
+
     const updatedLeads = leads.map(lead =>
       lead.id === id ? { ...lead, status } : lead
     );
     setLeads(updatedLeads);
-  
-    
+
+
     setLeadCounts(calculateCounts(updatedLeads));
     await fetch(`/api/leads/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status }),
     });
-    // Opcional: após a mudança de status, podemos querer re-buscar as contagens
+
   };
   const calculateCounts = (tasks: Lead[]): Record<LeadStatus, number> => {
     const counts = { NOVO: 0, EM_CONTATO: 0, CONVERTIDO: 0 };
@@ -83,15 +83,15 @@ export default function Leads() {
     }
     return counts;
   };
-  
+
   const handleWhatsAppClick = (lead: Lead) => {
 
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${lead.telefone}`;
     window.open(whatsappUrl, '_blank');
-  
-   
+
+
     if (lead.status === 'NOVO') {
-    
+
       handleStatusChange(lead.id, 'EM_CONTATO');
     }
   };
@@ -129,28 +129,27 @@ export default function Leads() {
   };
 
 
-  if ( leads.length === 0) {
+  if (leads.length === 0) {
     return <p style={{ textAlign: 'center', marginTop: '50px' }}>
-        Sem Leads
-        <Link href="/cadastro"><button style={{ cursor: 'pointer' }}>Cadastrar Leads</button></Link>
-        </p>;
+      Aguarde...
+    </p>;
   }
 
-    return (
-        <div>
-            <StatusCards counts={leadCounts} />
+  return (
+    <div>
+      <StatusCards counts={leadCounts} />
 
-            <Filters
-                searchTerm={searchTerm}
-                statusFilter={statusFilter}
-                dateFilter={dateFilter}
-                onSearchChange={setSearchTerm}
-                onStatusChange={setStatusFilter}
-                onDateChange={setDateFilter}
-            />
+      <Filters
+        searchTerm={searchTerm}
+        statusFilter={statusFilter}
+        dateFilter={dateFilter}
+        onSearchChange={setSearchTerm}
+        onStatusChange={setStatusFilter}
+        onDateChange={setDateFilter}
+      />
 
 
-    <LeadTable
+      <LeadTable
         leads={leads}
         editingLeadId={editingLeadId}
         editFormData={editFormData}
@@ -162,6 +161,6 @@ export default function Leads() {
         onWhatsAppClick={handleWhatsAppClick}
       />
 
-        </div>
-    )
+    </div>
+  )
 }
