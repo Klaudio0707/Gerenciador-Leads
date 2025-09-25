@@ -13,12 +13,14 @@ export function LeadForm() {
     const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value.replace(/\D/g, '');
         value = value.substring(0, 11);
-        if (value.length > 2) {
-          value = `(${value.substring(0, 2)}) ${value.substring(2)}`;
+        if (value.length > 10) {
+            value = value.replace(/^(\d\d)(\d{5})(\d{4}).*/, '($1) $2-$3');
+        } else if (value.length > 6) {
+            value = value.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+        } else if (value.length > 2) {
+            value = value.replace(/^(\d\d)(\d*)/, '($1) $2');
         }
-        if (value.length > 9) {
-          value = `${value.substring(0, 10)}-${value.substring(10)}`;
-        }
+        
         setTelefone(value);
       };
       

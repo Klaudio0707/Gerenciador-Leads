@@ -78,7 +78,14 @@ export async function POST(request: NextRequest) {
     if (!nome || !email || !telefone) {
       return NextResponse.json({ message: "Nome, e-mail e telefone são obrigatórios." }, { status: 400 });
     }
-    const newLead = await LeadService.createLead({ nome, email, telefone });
+
+    const phoneDigitsOnly = telefone.replace(/\D/g, '');
+
+    if (phoneDigitsOnly.length < 10 || phoneDigitsOnly.length > 11) {
+      return NextResponse.json({ message: 'O telefone fornecido é inválido.' }, { status: 400 });
+    }
+
+    const newLead = await LeadService.createLead({ nome, email, telefone: phoneDigitsOnly, });
 
     return NextResponse.json(newLead, { status: 201 });
 

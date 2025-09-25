@@ -25,4 +25,5 @@ export class LeadService {
 
     return prisma.lead.create({ data });
   }
+  
 }
