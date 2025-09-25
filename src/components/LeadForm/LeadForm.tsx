@@ -24,6 +24,7 @@ export function LeadForm() {
       
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsLoading(true);
         setMessage('');
         try {
             const response = await fetch('/api/leads', {
