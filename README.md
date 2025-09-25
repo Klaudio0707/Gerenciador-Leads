@@ -1,69 +1,71 @@
 
- --Gerenciador de Leads --
-                             ##
-Sobre o Projeto
-Esta aplicação consiste num sistema de captação e gestão de leads, com backend construído em Next.js e um banco de dados PostgreSQL.
+
+
+Gerenciador de Leads
+Um sistema full-stack para captação e gestão de leads, desenvolvido com Next.js, Prisma e PostgreSQL, como parte de um teste técnico.
 
 <img width="1237" height="504" alt="Dashboard" src="https://github.com/user-attachments/assets/8b683554-ca62-4fd7-a97b-c9fa35f763ae" />
 
+📋 Índice
+Sobre o Projeto
 
-Funcionalidades Implementadas
-A aplicação possui todas as funcionalidades requisitadas, incluindo os diferenciais:
-
-Tela de Captação (/cadastro)
-Formulário com campos para 
-
-Nome, E-mail e Telefone.
-
-Validação no frontend para uma melhor experiência do utilizador e validação robusta no backend para garantir a integridade dos dados.
-
-Ao submeter, o lead é salvo no banco de dados e o utilizador é redirecionado para uma conversa no WhatsApp.
-
-
-Regra de Negócio: Impede o cadastro de leads com o mesmo e-mail num intervalo de 1 hora.
-
-Tela de Visualização (/leads)
-Exibição de todos os leads cadastrados numa tabela clara e organizada.
-
-
-
-Gestão de Status: Permite visualizar e alterar o status de cada lead (NOVO, EM CONTATO, CONVERTIDO).
-
-Edição em Linha: Funcionalidade para editar nome, e-mail e telefone diretamente na tabela.
-
-
-Campo de Busca: Filtra dinamicamente a lista de leads por nome, e-mail ou telefone.
-
-
-Filtros Adicionais: Permite filtrar a lista por status e por data de cadastro.
-
-
-Dashboard de Contagem: Exibe a quantidade total de leads para cada status.
-
-Contato via WhatsApp: Link direto para iniciar uma conversa com o lead.
+Funcionalidades
 
 Stack de Tecnologias
 
-Framework Full-Stack: Next.js (com App Router) 
+Como Executar
+
+Estrutura do Projeto
+
+Endpoints da API
+
+🎯 Sobre o Projeto
+Este projeto foi desenvolvido para cumprir os requisitos de um teste técnico para a vaga de Desenvolvedor(a) Backend Júnior/Pleno. A aplicação permite a captação de leads através de um formulário e a sua posterior visualização e gestão num painel administrativo. O prazo de entrega do teste, 24/09/2025, foi cumprido.
+
+✨ Funcionalidades
+A aplicação implementa todas as funcionalidades requisitadas, incluindo os diferenciais propostos.
+
+Backend
+API RESTful construída com Next.js App Router.
+
+Validações robustas no servidor para garantir a integridade dos dados.
+
+Regra de negócio para duplicidade de e-mails, impedindo novos cadastros do mesmo e-mail num intervalo de 1 hora.
+
+Filtragem e busca processadas diretamente no banco de dados para melhor performance.
+
+Frontend
+Página de Captação de Leads com formulário e redirecionamento automático para o WhatsApp após o cadastro.
+
+Dashboard para Visualização de Leads com uma tabela clara e organizada para o cliente.
+
+Gestão de Status (NOVO, EM CONTATO, CONVERTIDO) de forma interativa.
+
+Edição em linha das informações do lead (nome, e-mail, telefone).
+
+Busca e Filtros dinâmicos por status e data.
+
+Exibição da contagem de leads por status.
+
+🚀 Stack de Tecnologias
+Framework Full-Stack: Next.js (App Router)
 
 Linguagem: TypeScript
 
+Banco de Dados: PostgreSQL
 
-Banco de Dados: PostgreSQL 
-
-
-ORM: Prisma 
+ORM: Prisma
 
 Estilização: CSS Modules
 
-Como Executar o Projeto Localmente
+🏁 Como Executar
 Pré-requisitos:
 
-Node.js (versão LTS v20.x recomendada)
+Node.js (v20.x LTS)
 
 NPM ou Yarn
 
-Uma instância do PostgreSQL a correr
+Instância do PostgreSQL a correr
 
 Passo a passo:
 
@@ -80,17 +82,17 @@ Bash
 npm install
 Configure as Variáveis de Ambiente:
 
-Renomeie o ficheiro .env.example (se existir) para .env.
+Crie um ficheiro .env na raiz do projeto.
 
-Abra o ficheiro .env e configure a sua DATABASE_URL do PostgreSQL:
-
+Adicione e configure a sua DATABASE_URL do PostgreSQL:
 DATABASE_URL="postgresql://USUARIO:SENHA@HOST:PORTA/NOME_DO_BANCO"
-Configure também a variável para o número do WhatsApp:
 
-NEXT_PUBLIC_WHATSAPP_NUMBER="SEU_NUMERO_DE_WHATSAPP"
+Adicione a variável para o número do WhatsApp (usada no formulário):
+NEXT_PUBLIC_WHATSAPP_NUMBER="SEU_NUMERO_COM_CODIGO_DO_PAIS"
+
 Execute as Migrations do Prisma:
 
-Este comando irá criar as tabelas no seu banco de dados com base no schema.prisma.
+Este comando irá criar as tabelas no seu banco de dados.
 
 Bash
 
@@ -102,9 +104,19 @@ Bash
 npm run dev
 A aplicação estará disponível em http://localhost:3000.
 
-Endpoints da API
-POST /api/leads: Cria um novo lead.
+📂 Estrutura do Projeto
+A arquitetura do projeto segue as melhores práticas do Next.js, com uma clara separação de responsabilidades:
 
-GET /api/leads: Busca a lista de leads (suporta filtros via query params: ?search=, ?status=, ?date=).
+src/app/: Contém as rotas da aplicação (páginas e APIs), seguindo a convenção do App Router.
 
-PUT /api/leads/[id]: Atualiza um lead específico.
+src/components/: Armazena todos os componentes React reutilizáveis.
+
+src/lib/: Utilitários e configurações partilhadas, como a instância singleton do Prisma.
+
+prisma/: Contém o schema do banco de dados e os ficheiros de migração.
+
+📡 Endpoints da API
+Método	Rota	Descrição
+POST	/api/leads	Cria um novo lead. Aplica a validação de 1 hora para e-mails duplicados.
+GET	/api/leads	Busca a lista de leads. Suporta query params para filtros (status, search, date).
+PUT	/api/leads/[id]	Atualiza as informações (nome, e-mail, telefone, status) de um lead específico.
