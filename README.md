@@ -1,5 +1,6 @@
 
-                                                                                                        ##Gerenciador de Leads ##
+ --Gerenciador de Leads --
+                             ##
 Sobre o Projeto
 Esta aplicação consiste num sistema de captação e gestão de leads, com backend construído em Next.js e um banco de dados PostgreSQL.
 
