@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+Gerenciador de Leads
+Sobre o Projeto
+Esta aplicação consiste num sistema de captação e gestão de leads, com backend construído em Next.js e um banco de dados PostgreSQL.
 
-First, run the development server:
+O projeto foi entregue em 24/09/2025, cumprindo o prazo estipulado.
 
-```bash
+Funcionalidades Implementadas
+A aplicação possui todas as funcionalidades requisitadas, incluindo os diferenciais:
+
+Tela de Captação (/cadastro)
+Formulário com campos para 
+
+Nome, E-mail e Telefone.
+
+Validação no frontend para uma melhor experiência do utilizador e validação robusta no backend para garantir a integridade dos dados.
+
+Ao submeter, o lead é salvo no banco de dados e o utilizador é redirecionado para uma conversa no 
+
+WhatsApp.
+
+
+Regra de Negócio: Impede o cadastro de leads com o mesmo e-mail num intervalo de 1 hora.
+
+Tela de Visualização (/leads)
+Exibição de todos os leads cadastrados numa tabela clara e organizada.
+
+
+
+Gestão de Status: Permite visualizar e alterar o status de cada lead (NOVO, EM CONTATO, CONVERTIDO).
+
+Edição em Linha: Funcionalidade para editar nome, e-mail e telefone diretamente na tabela.
+
+
+Campo de Busca: Filtra dinamicamente a lista de leads por nome, e-mail ou telefone.
+
+
+Filtros Adicionais: Permite filtrar a lista por status e por data de cadastro.
+
+
+Dashboard de Contagem: Exibe a quantidade total de leads para cada status.
+
+Contato via WhatsApp: Link direto para iniciar uma conversa com o lead.
+
+Stack de Tecnologias
+
+Framework Full-Stack: Next.js (com App Router) 
+
+Linguagem: TypeScript
+
+
+Banco de Dados: PostgreSQL 
+
+
+ORM: Prisma 
+
+Estilização: CSS Modules
+
+Como Executar o Projeto Localmente
+Pré-requisitos:
+
+Node.js (versão LTS v20.x recomendada)
+
+NPM ou Yarn
+
+Uma instância do PostgreSQL a correr
+
+Passo a passo:
+
+Clone o repositório:
+
+Bash
+
+git clone [URL_DO_SEU_REPOSITORIO]
+cd [NOME_DA_PASTA_DO_PROJETO]
+Instale as dependências:
+
+Bash
+
+npm install
+Configure as Variáveis de Ambiente:
+
+Renomeie o ficheiro .env.example (se existir) para .env.
+
+Abra o ficheiro .env e configure a sua DATABASE_URL do PostgreSQL:
+
+DATABASE_URL="postgresql://USUARIO:SENHA@HOST:PORTA/NOME_DO_BANCO"
+Configure também a variável para o número do WhatsApp:
+
+NEXT_PUBLIC_WHATSAPP_NUMBER="SEU_NUMERO_DE_WHATSAPP"
+Execute as Migrations do Prisma:
+
+Este comando irá criar as tabelas no seu banco de dados com base no schema.prisma.
+
+Bash
+
+npx prisma migrate dev
+Rode o projeto:
+
+Bash
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+A aplicação estará disponível em http://localhost:3000.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Endpoints da API
+POST /api/leads: Cria um novo lead.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+GET /api/leads: Busca a lista de leads (suporta filtros via query params: ?search=, ?status=, ?date=).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+PUT /api/leads/[id]: Atualiza um lead específico.
