@@ -1,5 +1,6 @@
 "use client";
-import { type FormEvent, useState } from 'react';
+
+import { ChangeEvent, type FormEvent, useState } from 'react';
 import styles from './LeadForm.module.css';
 
 export function LeadForm() {
@@ -9,6 +10,18 @@ export function LeadForm() {
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState('');
 
+    const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
+        let value = e.target.value.replace(/\D/g, '');
+        value = value.substring(0, 11);
+        if (value.length > 2) {
+          value = `(${value.substring(0, 2)}) ${value.substring(2)}`;
+        }
+        if (value.length > 9) {
+          value = `${value.substring(0, 10)}-${value.substring(10)}`;
+        }
+        setTelefone(value);
+      };
+      
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setMessage('');
@@ -31,7 +44,7 @@ export function LeadForm() {
 
                 setTimeout(() => {
                     window.open(whatsappUrl, '_blank');
-                }, 2000); // pausa para leitura de mensagem
+                }, 2000);
                
             } else {
                 const errorData = await response.json();
@@ -58,7 +71,7 @@ export function LeadForm() {
                 </div>
                 <div className={styles.formGroup}>
                     <label htmlFor="telefone">Telefone</label>
-                    <input id="telefone" type="tel" value={telefone} placeholder="81999998888" onChange={(e) => setTelefone(e.target.value)} required />
+                    <input id="telefone" type="tel" value={telefone} placeholder="(81) 99999-8888" onChange={handlePhoneChange}  maxLength={15} required />
                 </div>
                 <button type="submit" disabled={isLoading} className={styles.submitButton}>
                     {isLoading ? 'Enviando...' : 'Enviar'}
