@@ -1,9 +1,10 @@
 
-Gerenciador de Leads
+                                                                                                        ##Gerenciador de Leads ##
 Sobre o Projeto
 Esta aplicação consiste num sistema de captação e gestão de leads, com backend construído em Next.js e um banco de dados PostgreSQL.
 
-O projeto foi entregue em 24/09/2025, cumprindo o prazo estipulado.
+<img width="1237" height="504" alt="Dashboard" src="https://github.com/user-attachments/assets/8b683554-ca62-4fd7-a97b-c9fa35f763ae" />
+
 
 Funcionalidades Implementadas
 A aplicação possui todas as funcionalidades requisitadas, incluindo os diferenciais:
@@ -15,9 +16,7 @@ Nome, E-mail e Telefone.
 
 Validação no frontend para uma melhor experiência do utilizador e validação robusta no backend para garantir a integridade dos dados.
 
-Ao submeter, o lead é salvo no banco de dados e o utilizador é redirecionado para uma conversa no 
-
-WhatsApp.
+Ao submeter, o lead é salvo no banco de dados e o utilizador é redirecionado para uma conversa no WhatsApp.
 
 
 Regra de Negócio: Impede o cadastro de leads com o mesmo e-mail num intervalo de 1 hora.
